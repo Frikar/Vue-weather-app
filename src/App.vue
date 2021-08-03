@@ -1,14 +1,15 @@
 <template>
   <div class="container-main">
     <Search @search-input="setQuery" @keypress="searchQuery"></Search>
-    {{ query }}
-    <Weather></Weather>
+    <Weather :city="this.place.name" :country="this.place.country" :temp="this.weather.temp_c"
+             :weather="this.weather.condition.text"
+             v-if="typeof this.place != 'undefined'"></Weather>
   </div>
 </template>
 
 <script>
-import Search from '@/components/Search'
-import Weather from '@/components/Weather'
+import Search from './components/Search.vue'
+import Weather from './components/Weather.vue'
 
 export default {
   name: 'App',
@@ -19,8 +20,9 @@ export default {
   data () {
     return {
       api_key: 'c1116db5f8a5420c8c8204718213107',
-      url_base: 'http://api.weatherapi.com/v1/',
+      url_base: 'https://api.weatherapi.com/v1/',
       query: '',
+      place: {},
       weather: {}
     }
   },
@@ -28,11 +30,17 @@ export default {
     setQuery (country) {
       this.query = country
     },
-    searchQuery (e) {
+    async searchQuery (e) {
       if (e.key === 'Enter') {
-        console.log('Estoy buscando')
-        alert('Buscaste ' + this.query)
+        fetch(`${this.url_base}current.json?key=${this.api_key}&q=${this.query}&aqi=no&lang=es`).then(async res => {
+          return res.json()
+        }).then(this.setWeather)
       }
+    },
+    setWeather (results) {
+      this.place = results.location
+      this.weather = results.current
+      console.log(results)
     }
   }
 }
