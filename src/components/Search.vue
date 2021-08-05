@@ -5,7 +5,7 @@
       class="search-bar"
       placeholder="Presiona enter para buscar..."
       v-model="query"
-      @input="$emit('search-input', query)"
+      @keyup="$emit('search-input', query)"
     />
   </div>
 </template>
