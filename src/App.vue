@@ -38,6 +38,9 @@ export default {
     async searchQuery (e) {
       if (e.key === 'Enter') {
         fetch(`${this.url_base}current.json?key=${this.api_key}&q=${this.query}&aqi=no&lang=es`).then(async res => {
+          if (!res.ok) {
+            throw new Error('Busca de nuevo')
+          }
           return res.json()
         }).then(this.setWeather).catch(error => {
           console.error('Error con tu peticion', error)
