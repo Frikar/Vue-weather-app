@@ -1,7 +1,7 @@
 <template>
   <div id='app' :class="this.background">
     <div class="container-main">
-      <Search @search-input="setQuery" @keypress="searchQuery"></Search>
+      <Search @search-input="setQuery" @keypress="searchQuery" @focusout="searchQuery"></Search>
       <Weather :city="this.place.name" :country="this.place.country" :temp="this.weather.temp_c"
                :weather="this.condition.text"
                v-show="showBox"></Weather>
