@@ -39,7 +39,9 @@ export default {
       if (e.key === 'Enter') {
         fetch(`${this.url_base}current.json?key=${this.api_key}&q=${this.query}&aqi=no&lang=es`).then(async res => {
           return res.json()
-        }).then(this.setWeather)
+        }).then(this.setWeather).catch(error => {
+          console.error('Error con tu peticion', error)
+        })
       }
     },
     setWeather (results) {
