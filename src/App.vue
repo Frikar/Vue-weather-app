@@ -64,7 +64,7 @@ export default {
         this.background = 'fresh'
       } else if (temp <= 4) {
         this.background = 'cold'
-      } else {
+      } else if (temp > 30) {
         this.background = ''
       }
     }
@@ -82,7 +82,7 @@ body {
   background-image: url("./assets/bg-warm.jpg");
   background-size: cover;
   min-height: 100vh;
-  transition: 1s;
+  transition: 0.5s;
   animation: ease-in;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
