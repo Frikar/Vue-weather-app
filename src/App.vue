@@ -48,6 +48,7 @@ export default {
       }
     },
     setWeather (results) {
+      console.log(results)
       this.showBox = true
       this.place = results.location
       this.weather = results.current
