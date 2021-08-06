@@ -3,7 +3,7 @@
     <input
       type="text"
       class="search-bar"
-      placeholder="Presiona enter para buscar..."
+      placeholder="Presiona enter para buscar o realiza click fuera del campo..."
       v-model="query"
       @keyup="$emit('search-input', query)"
     />
