@@ -1,7 +1,7 @@
 <template>
   <div id='app' :class="this.background">
     <div class="container-main">
-      <Search @search-input="setQuery" @keypress="searchQuery" @focusout="searchQuery"></Search>
+      <Search @search-input="setQuery" @keypress.enter="searchQuery" @blur="searchQuery"></Search>
       <Weather :city="this.place.name" :country="this.place.country" :temp="this.weather.temp_c"
                :weather="this.condition.text"
                v-show="showBox"></Weather>
@@ -35,17 +35,15 @@ export default {
     setQuery (country) {
       this.query = country
     },
-    async searchQuery (e) {
-      if (e.key === 'Enter') {
-        fetch(`${this.url_base}current.json?key=${this.api_key}&q=${this.query}&aqi=no&lang=es`).then(async res => {
-          if (!res.ok) {
-            throw new Error('Busca de nuevo')
-          }
-          return res.json()
-        }).then(this.setWeather).catch(error => {
-          console.error('Error con tu peticion', error)
-        })
-      }
+    async searchQuery () {
+      fetch(`${this.url_base}current.json?key=${this.api_key}&q=${this.query}&aqi=no&lang=es`).then(async res => {
+        if (!res.ok) {
+          throw new Error('Busca de nuevo')
+        }
+        return res.json()
+      }).then(this.setWeather).catch(error => {
+        console.error('Error con tu peticion', error)
+      })
     },
     setWeather (results) {
       this.showBox = true
@@ -106,12 +104,15 @@ body {
 #app .cloud {
   background-image: url("./assets/bg-cloud.jpg");
 }
+
 #app .light {
   background-image: url("./assets/bg-light.jpg");
 }
+
 #app .fresh {
   background-image: url("./assets/bg-fresh.jpg");
 }
+
 #app .cold {
   background-image: url("./assets/bg-cold.jpg");
 }
